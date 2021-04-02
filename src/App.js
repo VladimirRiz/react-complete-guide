@@ -8,7 +8,7 @@ class App extends Component {
     persons: [
       { id: 'qwe1', name: 'Riz' },
       { id: 'qwe', name: 'Rita' },
-      { id: 'wqeq', name: 'Vlad' },
+      { id: 'wqeq', name: 'Vivienne' },
     ],
     open: false,
   };
@@ -63,7 +63,9 @@ class App extends Component {
             <UserInput
               value={person.name}
               change={(event) => this.onChangeHandler(event, person.id)}
+              length={person.name.length}
             />
+
             <UserOutput
               name={person.name}
               delete={this.deletePerson.bind(this, index)}
