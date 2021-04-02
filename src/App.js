@@ -10,18 +10,20 @@ class App extends Component {
       { id: 'qwe', name: 'Rita' },
       { id: 'wqeq', name: 'Vlad' },
     ],
+    open: false,
   };
 
   onChangeHandler = ({ target }, id) => {
-    const personIndex = this.state.persons.findIndex((p) => p.id === id);
+    const { persons } = this.state;
+    const personIndex = persons.findIndex((p) => p.id === id);
     const person = {
-      ...this.state.persons[personIndex],
+      ...persons[personIndex],
     };
     person.name = target.value;
-    const persons = [...this.state.persons];
-    persons[personIndex] = person;
+    const updatedPersons = [...persons];
+    updatedPersons[personIndex] = person;
     this.setState({
-      persons,
+      persons: updatedPersons,
     });
   };
 
@@ -33,25 +35,50 @@ class App extends Component {
     });
   };
 
+  toggleList = () => {
+    const isOpen = this.state.open;
+    this.setState({
+      open: !isOpen,
+    });
+  };
+
   render() {
-    const { persons } = this.state;
+    const { persons, open } = this.state;
+    const style = {
+      display: 'block',
+      margin: '1rem auto',
+      padding: '.5rem 1rem',
+      backgroundColor: '#eef',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      outline: 'none',
+    };
+
+    let person = null;
+
+    if (open) {
+      person = persons.map((person, index) => {
+        return (
+          <div key={person.id} className="card">
+            <UserInput
+              value={person.name}
+              change={(event) => this.onChangeHandler(event, person.id)}
+            />
+            <UserOutput
+              name={person.name}
+              delete={this.deletePerson.bind(this, index)}
+            />
+          </div>
+        );
+      });
+    }
+
     return (
       <div className="App">
-        <h1>Hello</h1>
-        {persons.map((person, index) => {
-          return (
-            <div key={person.id}>
-              <UserOutput
-                name={person.name}
-                delete={this.deletePerson.bind(this, index)}
-              />
-              <UserInput
-                value={person.name}
-                change={(event) => this.onChangeHandler(event, person.id)}
-              />
-            </div>
-          );
-        })}
+        <button style={style} onClick={this.toggleList}>
+          {open ? 'Close' : 'Open'}
+        </button>
+        {person}
       </div>
     );
   }
