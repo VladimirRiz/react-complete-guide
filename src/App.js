@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium from 'radium';
 import UserOutput from './UserOutput';
 import UserInput from './UserInput';
 
@@ -52,6 +53,9 @@ class App extends Component {
       borderRadius: '5px',
       cursor: 'pointer',
       outline: 'none',
+      ':hover': {
+        backgroundColor: '#ccf',
+      },
     };
 
     let person = null;
@@ -73,6 +77,10 @@ class App extends Component {
           </div>
         );
       });
+      style.backgroundColor = '#ffe';
+      style[':hover'] = {
+        backgroundColor: '#ffb',
+      };
     }
 
     return (
@@ -86,4 +94,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);

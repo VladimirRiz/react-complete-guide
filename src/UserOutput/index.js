@@ -5,7 +5,7 @@ const UserOutput = (props) => {
   return (
     <div className="user-output">
       <p>Name : {props.name}</p>
-      <button onClick={props.delete}>delete Person</button>
+      <button onClick={props.delete}>Delete Person</button>
     </div>
   );
 };
