@@ -3,6 +3,7 @@ import './App.css';
 import Radium from 'radium';
 import UserOutput from './UserOutput';
 import UserInput from './UserInput';
+import ErrorBoundary from './ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -63,18 +64,20 @@ class App extends Component {
     if (open) {
       person = persons.map((person, index) => {
         return (
-          <div key={person.id} className="card">
-            <UserInput
-              value={person.name}
-              change={(event) => this.onChangeHandler(event, person.id)}
-              length={person.name.length}
-            />
+          <ErrorBoundary>
+            <div key={person.id} className="card">
+              <UserInput
+                value={person.name}
+                change={(event) => this.onChangeHandler(event, person.id)}
+                length={person.name.length}
+              />
 
-            <UserOutput
-              name={person.name}
-              delete={this.deletePerson.bind(this, index)}
-            />
-          </div>
+              <UserOutput
+                name={person.name}
+                delete={this.deletePerson.bind(this, index)}
+              />
+            </div>
+          </ErrorBoundary>
         );
       });
       style.backgroundColor = '#ffe';
