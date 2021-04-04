@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Radium from 'radium';
-import UserOutput from './UserOutput';
-import UserInput from './UserInput';
-import ErrorBoundary from './ErrorBoundary';
+import Persons from '../components/Persons';
 
 class App extends Component {
   state = {
@@ -62,28 +60,18 @@ class App extends Component {
     let person = null;
 
     if (open) {
-      person = persons.map((person, index) => {
-        return (
-          <ErrorBoundary>
-            <div key={person.id} className="card">
-              <UserInput
-                value={person.name}
-                change={(event) => this.onChangeHandler(event, person.id)}
-                length={person.name.length}
-              />
-
-              <UserOutput
-                name={person.name}
-                delete={this.deletePerson.bind(this, index)}
-              />
-            </div>
-          </ErrorBoundary>
-        );
-      });
-      style.backgroundColor = '#ffe';
-      style[':hover'] = {
-        backgroundColor: '#ffb',
-      };
+      console.log(persons);
+      person = (
+        <Persons
+          persons={persons}
+          delete={this.deletePerson}
+          change={this.onChangeHandler}
+        />
+      );
+      // person = style.backgroundColor = '#ffe';
+      // style[':hover'] = {
+      //   backgroundColor: '#ffb',
+      // };
     }
 
     return (
